@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<link rel='stylesheet' href='style.css'>
+<title>User Dashboard</title>
+</head>
+
+<body>
+
+<h2>User Dashboard</h2>
+
+<h3>Your Bookings:</h3>
+
+<ul id='bookingList'></ul>
+
+<script src='script.js'></script>
+
+<script>
+// Fetch user bookings on load for user dashboard.
+fetch('api/get_user_bookings.php', {
+   method: 'GET',
+   credentials: 'include'
+})
+.then(response => response.json())
+.then(data => {
+   const list = document.getElementById('bookingList');
+   data.forEach(booking => {
+       const item = document.createElement('li');
+       item.textContent = `Booking ID: ${booking.id} - Ticket ID: ${booking.ticket_id} - Booked At: ${booking.booked_at}`;
+       list.appendChild(item);
+   });
+});
+</script>
+
+</body>
+
+</html>
+

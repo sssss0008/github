@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<h2>Admin Dashboard</h2>
+
+<h3>Add Ticket Type</h3>
+<form id="addTicketForm">
+    <input type="text" id="ticketType" placeholder="Ticket Type (Bus/Train/Car/Bike)" required />
+    <input type="number" id="price" placeholder="Price" required />
+    <input type="number" id="discount" placeholder="Discount (%)" required />
+    <button type="submit">Add Ticket Type</button>
+</form>
+
+<h3>Current Tickets</h3>
+<ul id='ticketList'></ul>
+
+<script src='script.js'></script>
+
+<script>
+// Fetch tickets on load for admin dashboard.
+fetch('api/get_tickets.php')
+.then(response => response.json())
+.then(data => {
+   const list = document.getElementById('ticketList');
+   data.forEach(ticket => {
+       const item = document.createElement('li');
+       item.textContent = `${ticket.type} - Price: ${ticket.price} - Discount: ${ticket.discount}%`;
+       list.appendChild(item);
+   });
+});
+</script>
+
+</body>
+</html>
+
